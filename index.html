@@ -445,32 +445,30 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 /* ============================================================
    WHY CHOOSE US
    ============================================================ */
-.why-list{display:flex;flex-direction:column;gap:0;}
-.why-row{
-  display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;
-  padding-block:44px;border-bottom:1px solid var(--grey-light);
+#why-us .section-head{max-width:1000px;}
+
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.why-card{
+  background:var(--white);border:1px solid var(--grey-light);border-radius:20px;
+  padding:38px 32px;transition:transform .4s var(--ease), box-shadow .4s var(--ease);
 }
-.why-row:last-child{border-bottom:none;}
-.why-row:nth-child(even) .why-visual{order:2;}
+.why-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-md);}
 .why-icon-wrap{
-  width:84px;height:84px;border-radius:22px;background:var(--navy);
-  display:flex;align-items:center;justify-content:center;position:relative;
+  width:72px;height:72px;border-radius:18px;background:var(--navy);
+  display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:24px;
 }
 .why-icon-wrap::after{
-  content:'';position:absolute;inset:-6px;border-radius:26px;border:1.5px dashed rgba(212,168,74,.5);
+  content:'';position:absolute;inset:-6px;border-radius:22px;border:1.5px dashed rgba(212,168,74,.5);
 }
-.why-icon-wrap svg{width:36px;height:36px;color:var(--gold);}
-.why-text h3{font-size:1.4rem;margin:24px 0 12px;}
-.why-text p{color:var(--grey);max-width:480px;}
-.why-num{
-  font-family:var(--font-head);font-weight:800;font-size:5rem;color:var(--grey-light);
-  line-height:1;text-align:right;
-}
+.why-icon-wrap svg{width:30px;height:30px;color:var(--gold);}
+.why-card h3{font-size:1.18rem;margin-bottom:10px;}
+.why-card p{color:var(--grey);}
 
-@media (max-width:780px){
-  .why-row{grid-template-columns:1fr;gap:18px;text-align:left;}
-  .why-row:nth-child(even) .why-visual{order:0;}
-  .why-num{display:none;}
+@media (max-width:980px){
+  .why-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:620px){
+  .why-grid{grid-template-columns:1fr;}
 }
 
 /* ============================================================
@@ -1001,59 +999,41 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
       <p class="section-sub">Six reasons clients across Rivers State and beyond choose Priziangori as their operating partner.</p>
     </div>
 
-    <div class="why-list">
-      <div class="why-row reveal">
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-compass"></use></svg></div>
-        <div class="why-text">
-          <span class="why-num">01</span>
-          <h3>Local Expertise, National Reach</h3>
-          <p>Deep operational knowledge of Rivers State and the Niger Delta, paired with the capacity to deliver projects across Nigeria.</p>
-        </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-target"></use></svg></div>
+        <h3>Comprehensive Service Portfolio</h3>
+        <p>One company for oil and gas, environmental, logistics, and hospitality solutions.</p>
       </div>
 
-      <div class="why-row reveal">
-        <div class="why-text">
-          <span class="why-num">02</span>
-          <h3>Environmental Commitment</h3>
-          <p>Every engagement is delivered with environmental responsibility at its core, from spill response to land reclamation.</p>
-        </div>
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-leaf"></use></svg></div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-compass"></use></svg></div>
+        <h3>Local Expertise, National Reach</h3>
+        <p>Headquartered in Port Harcourt, serving clients across Rivers State and Nigeria.</p>
       </div>
 
-      <div class="why-row reveal">
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-target"></use></svg></div>
-        <div class="why-text">
-          <span class="why-num">03</span>
-          <h3>Integrated Solutions</h3>
-          <p>One accountable partner across engineering, logistics, environmental and hospitality needs — fewer vendors, faster delivery.</p>
-        </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-leaf"></use></svg></div>
+        <h3>Environmental Commitment</h3>
+        <p>We integrate sustainability into every project — from pollution control to waste recycling.</p>
       </div>
 
-      <div class="why-row reveal">
-        <div class="why-text">
-          <span class="why-num">04</span>
-          <h3>Skilled Workforce</h3>
-          <p>Trained, certified personnel equipped to operate safely across demanding industrial and field environments.</p>
-        </div>
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-users"></use></svg></div>
+      <div class="why-card reveal">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-shield"></use></svg></div>
+        <h3>Quality &amp; Reliability</h3>
+        <p>Timely project delivery, regulatory compliance, and top-quality standards.</p>
       </div>
 
-      <div class="why-row reveal">
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-headset"></use></svg></div>
-        <div class="why-text">
-          <span class="why-num">05</span>
-          <h3>Customer-Centric Service</h3>
-          <p>Responsive account management and round-the-clock support that keeps client operations moving without disruption.</p>
-        </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-users"></use></svg></div>
+        <h3>Experienced Team</h3>
+        <p>Skilled professionals in engineering, procurement, oilfield services, and hospitality management.</p>
       </div>
 
-      <div class="why-row reveal">
-        <div class="why-text">
-          <span class="why-num">06</span>
-          <h3>Regulatory Compliance</h3>
-          <p>Operations aligned with Nigerian regulatory and HSE requirements, reducing risk for every client engagement.</p>
-        </div>
-        <div class="why-visual why-icon-wrap"><svg aria-hidden="true"><use href="#i-shield"></use></svg></div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon-wrap"><svg aria-hidden="true"><use href="#i-headset"></use></svg></div>
+        <h3>Customer Focus</h3>
+        <p>Customized services for corporate clients, government agencies, and local businesses.</p>
       </div>
     </div>
   </div>
