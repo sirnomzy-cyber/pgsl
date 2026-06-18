@@ -224,20 +224,18 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
   padding-top:clamp(128px, 20vh, 180px);
   padding-bottom:clamp(56px, 9vh, 96px);
 }
-.hero-bg{position:absolute;inset:0;display:flex;z-index:0;}
-.hero-bg-panel{
-  flex:1;position:relative;overflow:hidden;
-  transform:skewX(-9deg) scale(1.25);
-  margin-inline:-1.5%;
-  filter:saturate(.85) brightness(.7);
+.hero-slides{position:absolute;inset:0;z-index:0;}
+.hero-slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;
+  transition:opacity 1.8s ease;
+  filter:saturate(.9) brightness(.72);
 }
-.hero-bg-panel img{
-  position:absolute;top:-10%;left:-25%;width:150%;height:120%;
-  object-fit:cover;transform:skewX(9deg) scale(1.05);
-}
+.hero-slide.is-active{opacity:1;}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
-  background:linear-gradient(115deg, rgba(8,26,54,.97) 0%, rgba(8,26,54,.92) 32%, rgba(8,26,54,.66) 58%, rgba(8,26,54,.40) 100%);
+  background:linear-gradient(115deg, rgba(8,26,54,.95) 0%, rgba(8,26,54,.88) 38%, rgba(8,26,54,.62) 68%, rgba(8,26,54,.42) 100%);
 }
 .hero-overlay::after{
   content:'';position:absolute;inset:0;
@@ -248,16 +246,22 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:10px;
   font-weight:700;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gold-light);margin-bottom:18px;
+  color:var(--gold-light);margin-bottom:14px;
 }
 .hero-eyebrow::before{content:'';width:30px;height:2px;background:var(--gold);}
+.hero-tagline{
+  font-family:var(--font-head);font-weight:700;
+  font-size:clamp(1.05rem, .95rem + .5vw, 1.3rem);
+  color:var(--white);max-width:640px;line-height:1.4;
+  margin-bottom:22px;
+}
 .hero-title{
   font-size:clamp(2rem, 1.1rem + 2.8vw, 3.35rem);
   line-height:1.18;
   color:var(--white);margin-bottom:20px;
 }
 .hero-title .accent{color:var(--gold-light);}
-.hero-text{font-size:clamp(1rem,.95rem + .3vw,1.15rem);color:rgba(255,255,255,.86);max-width:560px;margin-bottom:30px;}
+.hero-text{font-size:clamp(.96rem,.9rem + .2vw,1.05rem);line-height:1.75;color:rgba(255,255,255,.86);max-width:640px;margin-bottom:32px;}
 .hero-actions{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:30px;}
 
 .hero-floats{position:absolute;z-index:2;display:none;}
@@ -370,35 +374,73 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative;z-index:1;}
 .service-card{
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
-  border-radius:22px;padding:38px 30px;backdrop-filter:blur(16px);
-  transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease);
+  position:relative;perspective:1800px;min-height:440px;
+  border-radius:22px;
+  transition:transform .4s var(--ease);
+}
+.service-card:hover{transform:translateY(-10px);}
+.flip-card-inner{
+  position:relative;width:100%;height:100%;
+  transition:transform .7s var(--ease);
+  transform-style:preserve-3d;
+}
+.service-card.is-flipped .flip-card-inner{transform:rotateY(180deg);}
+
+.card-face{
+  position:absolute;inset:0;backface-visibility:hidden;
+  border-radius:22px;padding:38px 30px;
   display:flex;flex-direction:column;
 }
-.service-card:hover{
-  transform:translateY(-10px);
+.card-front{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(16px);
+  transition:box-shadow .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease);
+}
+.service-card:hover .card-front{
   box-shadow:0 24px 60px -14px rgba(212,168,74,.4);
   border-color:rgba(212,168,74,.55);
   background:rgba(255,255,255,.08);
 }
+.card-back{
+  background:var(--white);border:1px solid var(--grey-light);
+  box-shadow:var(--shadow-md);
+  transform:rotateY(180deg);
+  overflow-y:auto;
+}
+.card-back h3{color:var(--navy);}
+.card-back p{color:var(--grey);}
+
 .service-icon{
-  width:60px;height:60px;border-radius:16px;
+  width:60px;height:60px;border-radius:16px;flex-shrink:0;
   background:rgba(212,168,74,.14);border:1px solid rgba(212,168,74,.35);
   display:flex;align-items:center;justify-content:center;margin-bottom:24px;
   transition:transform .4s var(--ease);
 }
-.service-card:hover .service-icon{transform:translateY(-4px) rotate(-4deg);}
+.service-card:hover .card-front .service-icon{transform:translateY(-4px) rotate(-4deg);}
 .service-icon svg{width:28px;height:28px;color:var(--gold);}
-.service-card h3{color:var(--white);font-size:1.22rem;margin-bottom:12px;}
-.service-card p{color:rgba(255,255,255,.7);font-size:.95rem;flex-grow:1;margin-bottom:22px;}
+.card-front h3{color:var(--white);font-size:1.22rem;margin-bottom:12px;}
+.card-front p{color:rgba(255,255,255,.7);font-size:.95rem;flex-grow:1;margin-bottom:22px;}
+.card-back h3{font-size:1.22rem;margin-bottom:12px;}
+.card-back p{font-size:.92rem;line-height:1.65;flex-grow:1;margin-bottom:22px;}
 .service-link{
   display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem;color:var(--gold-light);
+  background:none;border:none;padding:0;cursor:pointer;font-family:inherit;
 }
 .service-link svg{width:16px;height:16px;transition:transform .3s var(--ease);}
 .service-card:hover .service-link svg{transform:translateX(5px);}
+.card-back-btn{
+  display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.85rem;color:var(--navy);
+  background:none;border:none;padding:0;cursor:pointer;font-family:inherit;align-self:flex-start;
+}
+.card-back-btn svg{width:16px;height:16px;transform:scaleX(-1);transition:transform .3s var(--ease);}
+.card-back-btn:hover{color:var(--gold-dark, #B9852F);}
+.card-back-btn:hover svg{transform:scaleX(-1) translateX(4px);}
 
 @media (max-width:980px){.services-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:620px){.services-grid{grid-template-columns:1fr;}}
+@media (max-width:620px){.services-grid{grid-template-columns:1fr;} .service-card{min-height:400px;}}
+@media (prefers-reduced-motion: reduce){
+  .flip-card-inner{transition:none;}
+}
 
 /* ============================================================
    WHY CHOOSE US
@@ -745,12 +787,12 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
      HERO
      ============================================================ -->
 <section class="hero" id="home">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-bg-panel"><img src="https://images.unsplash.com/photo-1611581372056-30cf28a7bd2e?q=80&w=900&auto=format&fit=crop" alt="" loading="eager"></div>
-    <div class="hero-bg-panel"><img src="https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=900&auto=format&fit=crop" alt="" loading="eager"></div>
-    <div class="hero-bg-panel"><img src="https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=900&auto=format&fit=crop" alt="" loading="eager"></div>
-    <div class="hero-bg-panel"><img src="https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?q=80&w=900&auto=format&fit=crop" alt="" loading="eager"></div>
-    <div class="hero-bg-panel"><img src="https://images.unsplash.com/photo-1583953458882-302655b5c376?q=80&w=900&auto=format&fit=crop" alt="" loading="eager"></div>
+  <div class="hero-slides" aria-hidden="true">
+    <div class="hero-slide is-active" style="background-image:url('https://images.unsplash.com/photo-1611581372056-30cf28a7bd2e?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1583953458882-302655b5c376?q=80&w=1600&auto=format&fit=crop')"></div>
   </div>
   <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -763,8 +805,9 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
   <div class="container hero-inner">
     <div class="hero-content">
       <p class="hero-eyebrow">Priziangori Global Services Limited</p>
-      <h1 class="hero-title">Delivering Sustainable Industrial, <span class="accent">Environmental &amp; Hospitality</span> Solutions Across Nigeria</h1>
-      <p class="hero-text">A trusted partner in Oil &amp; Gas Services, Environmental Management, Engineering, Logistics, Procurement, Trade, and Hospitality Solutions.</p>
+      <p class="hero-tagline">Innovating Oil &amp; Gas, Environmental, and Hospitality Solutions in Nigeria</p>
+      <h1 class="hero-title">Your Trusted Partner in <span class="accent">Industrial, Environmental &amp; Hospitality</span> Services</h1>
+      <p class="hero-text">Welcome to Priziangori Global Services Limited, a leading oil and gas service company in Port Harcourt, Rivers State, Nigeria, offering integrated solutions across oilfield services, waste management, logistics, engineering, and hospitality. We are driven by innovation, integrity, and sustainability — helping businesses, industries, and communities thrive with reliable, high-quality services tailored to their unique needs.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn btn-gold">Request a Quote <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
         <a href="#services" class="btn btn-outline-light">Explore Services</a>
@@ -842,46 +885,106 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
     </div>
 
     <div class="services-grid">
-      <article class="service-card reveal">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-drop"></use></svg></div>
-        <h3>Oil &amp; Gas Services</h3>
-        <p>Upstream and downstream support including equipment leasing, site logistics, manpower supply, and operational support for energy clients across the Niger Delta.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-drop"></use></svg></div>
+            <h3>Oil &amp; Gas Services</h3>
+            <p>Upstream and downstream support including equipment leasing, site logistics, manpower supply, and operational support for energy clients across the Niger Delta.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-drop"></use></svg></div>
+            <h3>Oil &amp; Gas Services</h3>
+            <p>We provide top-tier oilfield services in Port Harcourt, including the supply of petroleum products, oil tools and equipment, and LPG / cooking gas distribution across Rivers State. Our team supports clients in energy, oilfield, and filling station operations, ensuring safety, efficiency, and compliance in every project.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
 
-      <article class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-leaf"></use></svg></div>
-        <h3>Environmental &amp; Waste Management</h3>
-        <p>Oil spill response, bush clearing, waste disposal, and land reclamation services designed to protect communities and meet regulatory standards.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal reveal-delay-1" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-leaf"></use></svg></div>
+            <h3>Environmental &amp; Waste Management</h3>
+            <p>Oil spill response, bush clearing, waste disposal, and land reclamation services designed to protect communities and meet regulatory standards.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-leaf"></use></svg></div>
+            <h3>Environmental &amp; Waste Management</h3>
+            <p>As a responsible environmental service company, we offer sustainable solutions such as waste management, oil spill cleanup, pollution control, land reclamation, sand filling, and shore protection. We help corporate and government partners maintain clean, safe, and productive environments across the Niger Delta and beyond.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
 
-      <article class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-truck"></use></svg></div>
-        <h3>Logistics, Haulage &amp; Procurement</h3>
-        <p>Reliable haulage, fleet management, and end-to-end procurement and supply chain solutions for industrial and commercial clients.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal reveal-delay-2" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-truck"></use></svg></div>
+            <h3>Logistics, Haulage &amp; Procurement</h3>
+            <p>Reliable haulage, fleet management, and end-to-end procurement and supply chain solutions for industrial and commercial clients.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-truck"></use></svg></div>
+            <h3>Logistics, Haulage &amp; Procurement</h3>
+            <p>Priziangori Global Services Limited operates a reliable haulage and logistics service in Port Harcourt, providing efficient supply chain management, equipment leasing, procurement, and manpower supply. Our logistics division ensures your goods, tools, and equipment reach their destination safely and on time.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
 
-      <article class="service-card reveal">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-gear"></use></svg></div>
-        <h3>Engineering &amp; Contracting</h3>
-        <p>Civil works, site engineering, and contracting services delivered with strict attention to safety, quality, and project timelines.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-gear"></use></svg></div>
+            <h3>Engineering &amp; Contracting</h3>
+            <p>Civil works, site engineering, and contracting services delivered with strict attention to safety, quality, and project timelines.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-gear"></use></svg></div>
+            <h3>Engineering &amp; Contracting</h3>
+            <p>We execute high-quality engineering, surveying, and construction contracting services across Nigeria. From land development and infrastructure projects to machinery supply and project management, we deliver precision and reliability every time.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
 
-      <article class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-globe"></use></svg></div>
-        <h3>Import, Export &amp; Trade</h3>
-        <p>Cross-border trade facilitation, customs coordination, and sourcing support connecting Nigerian businesses to global supply chains.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal reveal-delay-1" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-globe"></use></svg></div>
+            <h3>Import, Export &amp; General Trade</h3>
+            <p>Cross-border trade facilitation, customs coordination, and sourcing support connecting Nigerian businesses to global supply chains.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-globe"></use></svg></div>
+            <h3>Import, Export &amp; General Trade</h3>
+            <p>Our import and export services connect Nigerian industries to global suppliers. We act as manufacturers' representatives, providing general goods, industrial tools, and oilfield materials to clients across the country.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
 
-      <article class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><svg aria-hidden="true"><use href="#i-bed"></use></svg></div>
-        <h3>Hospitality &amp; Tourism</h3>
-        <p>Accommodation, catering, and guest-services solutions for corporate clients, project sites, and visiting personnel.</p>
-        <a href="#contact" class="service-link">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+      <article class="service-card reveal reveal-delay-2" data-flip-card>
+        <div class="flip-card-inner">
+          <div class="card-face card-front">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-bed"></use></svg></div>
+            <h3>Hospitality &amp; Tourism</h3>
+            <p>Accommodation, catering, and guest-services solutions for corporate clients, project sites, and visiting personnel.</p>
+            <button type="button" class="service-link" data-flip-open aria-expanded="false">Learn More <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+          <div class="card-face card-back" aria-hidden="true">
+            <div class="service-icon"><svg aria-hidden="true"><use href="#i-bed"></use></svg></div>
+            <h3>Hospitality &amp; Tourism</h3>
+            <p>We proudly extend our expertise to the hospitality industry with top-notch hotel and resort management, shortlet apartments, restaurant and catering services, and food processing and distribution in Port Harcourt.</p>
+            <button type="button" class="card-back-btn" data-flip-close tabindex="-1">Back <svg aria-hidden="true"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </div>
       </article>
     </div>
   </div>
@@ -1367,6 +1470,42 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 <script>
 (function(){
   "use strict";
+
+  /* ---------------- Hero background slideshow ---------------- */
+  var heroSlides = document.querySelectorAll('.hero-slide');
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroSlides.length > 1 && !prefersReducedMotion){
+    var currentSlide = 0;
+    setInterval(function(){
+      heroSlides[currentSlide].classList.remove('is-active');
+      currentSlide = (currentSlide + 1) % heroSlides.length;
+      heroSlides[currentSlide].classList.add('is-active');
+    }, 5000);
+  }
+
+  /* ---------------- Service card flip (Learn More) ---------------- */
+  document.querySelectorAll('[data-flip-card]').forEach(function(card){
+    var openBtn = card.querySelector('[data-flip-open]');
+    var closeBtn = card.querySelector('[data-flip-close]');
+    var front = card.querySelector('.card-front');
+    var back = card.querySelector('.card-back');
+
+    function setFlipped(flipped){
+      card.classList.toggle('is-flipped', flipped);
+      if (openBtn){
+        openBtn.setAttribute('aria-expanded', flipped ? 'true' : 'false');
+        openBtn.tabIndex = flipped ? -1 : 0;
+      }
+      if (closeBtn){ closeBtn.tabIndex = flipped ? 0 : -1; }
+      if (front) front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+      if (back) back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      if (flipped && closeBtn) closeBtn.focus();
+      else if (!flipped && openBtn) openBtn.focus();
+    }
+
+    if (openBtn) openBtn.addEventListener('click', function(){ setFlipped(true); });
+    if (closeBtn) closeBtn.addEventListener('click', function(){ setFlipped(false); });
+  });
 
   /* ---------------- Header scroll state ---------------- */
   var header = document.getElementById('siteHeader');
