@@ -224,21 +224,15 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
   padding-top:clamp(128px, 20vh, 180px);
   padding-bottom:clamp(56px, 9vh, 96px);
 }
-.hero-slides{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.hero-slides{position:absolute;inset:0;z-index:0;}
 .hero-slide{
   position:absolute;inset:0;
   background-size:cover;background-position:center;
   opacity:0;
   transition:opacity 1.8s ease;
   filter:saturate(.9) brightness(.72);
-  animation:kenburns 16s ease-in-out infinite alternate;
-  transform-origin:center;
 }
 .hero-slide.is-active{opacity:1;}
-@keyframes kenburns{
-  0%{transform:scale(1);}
-  100%{transform:scale(1.12);}
-}
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
   background:linear-gradient(115deg, rgba(8,26,54,.95) 0%, rgba(8,26,54,.88) 38%, rgba(8,26,54,.62) 68%, rgba(8,26,54,.42) 100%);
@@ -316,15 +310,13 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
   border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);
   aspect-ratio:4/5;
 }
-.overview-media-main img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease);}
+.overview-media-main img{width:100%;height:100%;object-fit:cover;}
 .overview-media-small{
   position:absolute;width:46%;aspect-ratio:5/4;border-radius:var(--radius-md);
   overflow:hidden;border:6px solid var(--white);box-shadow:var(--shadow-md);
   bottom:-8%;right:-12%;
 }
-.overview-media-small img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease);}
-.overview-media:hover .overview-media-main img,
-.overview-media:hover .overview-media-small img{transform:scale(1.08);}
+.overview-media-small img{width:100%;height:100%;object-fit:cover;}
 .overview-badge{
   position:absolute;top:-7%;left:-9%;background:var(--navy);color:var(--white);
   border-radius:var(--radius-md);padding:20px 24px;box-shadow:var(--shadow-md);
@@ -341,9 +333,19 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 }
 .overview-fact svg{width:18px;height:18px;color:var(--gold);}
 
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-top:36px;border-top:1px solid var(--grey-light);}
+.counter-item{text-align:left;}
+.counter-num{
+  font-family:var(--font-head);font-weight:800;font-size:clamp(1.6rem,1.1rem + 1.6vw,2.3rem);
+  color:var(--navy);display:flex;align-items:baseline;gap:2px;
+}
+
+.counter-label{font-size:.82rem;color:var(--grey);font-weight:500;margin-top:4px;}
+
 @media (max-width:980px){
   .overview-grid{grid-template-columns:1fr;}
   .overview-media{margin-bottom:24px;max-width:480px;margin-inline:auto;}
+  .counters{grid-template-columns:repeat(2,1fr);}
 }
 @media (max-width:560px){
   .overview-media-small{right:-4%;bottom:-6%;width:50%;}
@@ -571,14 +573,10 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
    STATISTICS BANNER
    ============================================================ */
 .stats{
-  background-image:linear-gradient(120deg,rgba(8,26,54,.92) 0%, rgba(12,35,72,.90) 50%, rgba(8,26,54,.92) 100%), url('images/refinery-aerial.jpeg');
-  background-size:cover;background-position:center;background-attachment:fixed;
+  background:linear-gradient(120deg,var(--navy) 0%, #0C2348 50%, var(--navy) 100%);
   color:var(--white);position:relative;overflow:hidden;
 }
 .stats::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 15% 85%, rgba(212,168,74,.18), transparent 55%);}
-@media (max-width:780px){
-  .stats{background-attachment:scroll;}
-}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative;z-index:1;text-align:center;}
 .stat-item{border-right:1px solid rgba(255,255,255,.14);padding-inline:16px;}
 .stat-item:last-child{border-right:none;}
@@ -788,11 +786,11 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
      ============================================================ -->
 <section class="hero" id="home">
   <div class="hero-slides" aria-hidden="true">
-    <div class="hero-slide is-active" style="background-image:url('images/oil-rig.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/refinery-aerial.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/tanker-truck.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/cargo-ship-loaded.jpeg')"></div>
-    <div class="hero-slide" style="background-image:url('images/port-cranes.jpeg')"></div>
+    <div class="hero-slide is-active" style="background-image:url('https://images.unsplash.com/photo-1611581372056-30cf28a7bd2e?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1616432043562-3671ea2e5242?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1535732759880-bbd5c7265e3f?q=80&w=1600&auto=format&fit=crop')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1583953458882-302655b5c376?q=80&w=1600&auto=format&fit=crop')"></div>
   </div>
   <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -832,10 +830,10 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
         <span class="lbl">Founded</span>
       </div>
       <div class="overview-media-main">
-        <img src="images/cargo-ship-dock.jpeg" alt="Large cargo ship docked at port, reflecting Priziangori's logistics and import/export reach" loading="lazy" width="683" height="1024">
+        <img src="https://images.unsplash.com/photo-1599995903128-531fc7fb694b?q=80&w=1100&auto=format&fit=crop" alt="Modern high-rise skyline representing Priziangori's national operational reach" loading="lazy" width="900" height="1125">
       </div>
       <div class="overview-media-small">
-        <img src="images/port-vans.jpeg" alt="Container transport vehicles coordinating cargo movement at the port" loading="lazy" width="1024" height="683">
+        <img src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=700&auto=format&fit=crop" alt="Field engineers coordinating on-site operations" loading="lazy" width="500" height="400">
       </div>
     </div>
 
@@ -851,6 +849,24 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
         <span class="overview-fact"><svg aria-hidden="true"><use href="#i-leaf"></use></svg> Sustainability-led Operations</span>
       </div>
 
+      <div class="counters">
+        <div class="counter-item">
+          <div class="counter-num"><span class="count-up" data-target="6">0</span><span class="suffix">+</span></div>
+          <div class="counter-label">Service Divisions</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num"><span class="count-up" data-target="100">0</span><span class="suffix">%</span></div>
+          <div class="counter-label">Commitment to Quality</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num"><span class="count-up" data-target="24">0</span><span class="suffix">/7</span></div>
+          <div class="counter-label">Client Support</div>
+        </div>
+        <div class="counter-item">
+          <div class="counter-num">National</div>
+          <div class="counter-label">Coverage</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
