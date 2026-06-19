@@ -710,44 +710,18 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
 /* ============================================================
    PAGE HERO (inner pages)
    ============================================================ */
-.page-hero{
-  position:relative;color:var(--white);overflow:hidden;
-  padding-top:clamp(150px, 22vh, 200px);
-  padding-bottom:clamp(64px, 10vh, 100px);
-  background:linear-gradient(125deg, var(--navy) 0%, var(--navy-3) 55%, var(--navy) 100%);
-}
-.page-hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:url('https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=1600&auto=format&fit=crop');
-  background-size:cover;background-position:center;
-  opacity:.22;mix-blend-mode:luminosity;
-}
-.page-hero::after{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at 88% 8%, rgba(212,168,74,.22), transparent 55%);
-}
-.page-hero-inner{position:relative;z-index:1;max-width:760px;}
-.page-hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-weight:700;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gold-light);margin-bottom:16px;
-}
-.page-hero-eyebrow::before{content:'';width:30px;height:2px;background:var(--gold);}
-.page-hero h1{
-  font-size:clamp(1.9rem, 1rem + 2.6vw, 3.1rem);
-  color:var(--white);line-height:1.2;margin-bottom:18px;
-}
-.page-hero h1 .accent{color:var(--gold-light);}
-.page-hero p.lead{
-  font-size:clamp(.98rem, .9rem + .2vw, 1.08rem);
-  line-height:1.75;color:rgba(255,255,255,.84);max-width:680px;
-}
-.page-hero-crumb{
-  display:flex;align-items:center;gap:8px;margin-top:26px;
-  font-size:.85rem;color:rgba(255,255,255,.6);
-}
-.page-hero-crumb a{color:rgba(255,255,255,.85);font-weight:600;}
-.page-hero-crumb a:hover{color:var(--gold-light);}
+.page-hero{padding-top:clamp(120px,16vw,180px);padding-bottom:clamp(56px,8vw,96px);background:linear-gradient(135deg,var(--navy) 0%,var(--navy-3) 100%);position:relative;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;opacity:.12;}
+.page-hero-inner{position:relative;}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.page-hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--gold);display:inline-block;}
+.page-hero h1{font-size:clamp(2rem,1rem + 3vw,3.4rem);color:var(--white);margin-bottom:20px;max-width:800px;}
+.page-hero h1 .accent{color:var(--gold);}
+.page-hero-sub{color:rgba(255,255,255,.75);font-size:clamp(1rem,0.5rem + 1vw,1.2rem);max-width:640px;}
+.breadcrumb{display:flex;align-items:center;gap:10px;margin-top:32px;font-size:.88rem;color:rgba(255,255,255,.6);}
+.breadcrumb a{color:rgba(255,255,255,.75);transition:color .3s;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{color:var(--gold);}
 
 /* ============================================================
    INTRO / OFFICE LOCATION BLOCK
@@ -904,12 +878,12 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:800;line-height:1.15;color:
   <div class="container page-hero-inner">
     <p class="page-hero-eyebrow">Contact Priziangori Global Services Limited</p>
     <h1>Your Trusted Partner for <span class="accent">Oil &amp; Gas, Environmental, Logistics &amp; Hospitality</span> Services in Nigeria</h1>
-    <p class="lead">Talk to our team about oilfield services, waste management, logistics and haulage, engineering and contracting, or hospitality solutions in Port Harcourt, Rivers State, and across Nigeria.</p>
-    <div class="page-hero-crumb">
+    <p class="page-hero-sub">Talk to our team about oilfield services, waste management, logistics and haulage, engineering and contracting, or hospitality solutions in Port Harcourt, Rivers State, and across Nigeria.</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="index.html">Home</a>
-      <span>/</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       <span>Contact</span>
-    </div>
+    </nav>
   </div>
 </section>
 
